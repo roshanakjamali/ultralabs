@@ -98,17 +98,6 @@
       "employmentType": "Project based",
       "hourlyRate": "199",
       "isFavorit": true
-    },
-    {
-      "id": 10,
-      "avatar": "https://images.pexels.com/photos/227294/pexels-photo-227294.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb",
-      "firstName": "Mitchell",
-      "lastName": "Conn",
-      "jobTitle": "Product Accounts Supervisor",
-      "location": "Great Falls, Maryland",
-      "employmentType": "Project based",
-      "hourlyRate": "199",
-      "isFavorit": false
     }
   ]
 }
