@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -31,11 +32,17 @@ import { SquareIconButton } from "../../components/squareIconButton";
 import { getExperts } from "../../services";
 import { ExpertProps } from "../../services/entities";
 
+import { AddExpert } from "./add";
+import { open } from "./add/add.dialogSlice";
+
 import { useStyles } from "./list.style";
 
 const List = (props: any) => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+
   const [experts, setExperts] = useState<ExpertProps[]>([]);
+  const [openAdd, setOpenAdd] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -175,11 +182,13 @@ const List = (props: any) => {
         <Grid item xs={12} sm={6}>
           <CustomButton
             variant="contained"
-            color="secondary"
+            color="primary"
             startIcon={<AddCircleRoundedIcon />}
+            onClick={() => dispatch(open())}
           >
             Add a new item
           </CustomButton>
+          <AddExpert />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="body1" align="right">

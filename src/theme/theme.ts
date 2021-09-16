@@ -20,6 +20,11 @@ export const theme = createTheme({
   palette,
   typography: {
     fontFamily: "OpenSans, Arial",
+    h4: {
+      fontSize: 18,
+      fontWeight: 600,
+      color: "#0085FF",
+    },
     h6: {
       fontSize: 20,
       fontWeight: 700,
@@ -84,6 +89,30 @@ export const theme = createTheme({
       },
       body: {
         color: "#1F1F1F",
+      },
+    },
+    MuiDialogContent: {
+      root: {
+        overflowY: "unset",
+        padding: defaultTheme.spacing(4, 3),
+      },
+    },
+    MuiFormLabel: {
+      root: {
+        fontSize: "14px",
+        color: palette.primary.dark,
+        fontWeight: 700,
+        lineHeight: "19px",
+        marginBottom: defaultTheme.spacing(1),
+      },
+    },
+    MuiInputBase: {
+      input: {
+        height: 40,
+        border: "1px solid #0085FF",
+        borderRadius: 4,
+        padding: defaultTheme.spacing(1, 2),
+        boxSizing: "border-box",
       },
     },
   },

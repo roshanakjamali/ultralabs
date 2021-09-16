@@ -5,12 +5,14 @@ const CustomButton = withStyles((theme: Theme) =>
   createStyles({
     root: {
       borderRadius: theme.spacing(3),
-      backgroundColor: theme.palette.primary.light,
       fontSize: "1rem",
       lineHeight: "24px",
       boxShadow: "0px 0px 8px 1px rgba(7, 87, 182, 0.15)",
     },
-    containedSecondary: {
+    containedPrimary: {
+      root: {
+        backgroundColor: theme.palette.primary.light,
+      },
       "&:hover": {
         backgroundColor: darken(theme.palette.primary.light, 0.1),
         boxShadow: "0px 0px 8px 1px rgba(7, 87, 182, 0.25)",
