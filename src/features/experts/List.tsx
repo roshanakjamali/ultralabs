@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
 import Box from "@material-ui/core/Box";
@@ -30,7 +30,7 @@ import { CustomButton } from "../../components/customButton";
 import { SquareIconButton } from "../../components/squareIconButton";
 
 import { ExpertProps } from "../../services/entities";
-import { getExperts, deleteExpert } from "../../services";
+import { getExperts, deleteExpert, toggleFavExpert } from "../../services";
 
 import { AddExpert } from "./add";
 import { open } from "./add/add.dialogSlice";
@@ -43,11 +43,21 @@ const List = (props: any) => {
 
   const [experts, setExperts] = useState<ExpertProps[]>([]);
 
+  const getExpertList = async () => {
+    const experts = await getExperts();
+    experts && setExperts(experts);
+  };
+
+  const onDeleteExpert = useCallback(async (id: number) => {
+    await deleteExpert(id);
+  }, []);
+
+  const onToggleFav = useCallback(async (expert: ExpertProps) => {
+    await toggleFavExpert({ ...expert, isFavorit: !expert.isFavorit });
+  }, []);
+
   useEffect(() => {
-    (async () => {
-      const experts = await getExperts();
-      experts && setExperts(experts);
-    })();
+    getExpertList();
   }, []);
 
   return (
@@ -159,7 +169,11 @@ const List = (props: any) => {
                     <TableCell>{expert.employmentType}</TableCell>
                     <TableCell align="right">{expert.hourlyRate}</TableCell>
                     <TableCell align="right">
-                      <IconButton color="default" aria-label="favorite">
+                      <IconButton
+                        color="default"
+                        aria-label="favorite"
+                        onClick={() => onToggleFav(expert)}
+                      >
                         <IconMaker
                           icon={
                             expert.isFavorit ? IconFavoritFilled : IconFavorit
@@ -171,7 +185,7 @@ const List = (props: any) => {
                       <IconButton
                         color="default"
                         aria-label="trash"
-                        onClick={() => deleteExpert(expert.id)}
+                        onClick={() => onDeleteExpert(expert.id)}
                       >
                         <IconMaker icon={IconTrash} viewBox={"0 0 18 19"} />
                       </IconButton>
