@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -19,17 +21,28 @@ import {
   IconFilter,
   IconFavorit,
   IconSortReset,
+  IconFavoritFilled,
 } from "../../helpers/icon";
-import { SampleAvatar } from "../../helpers/image";
 import IconMaker from "../../components/iconMaker";
 
 import { CustomButton } from "../../components/customButton";
 import { SquareIconButton } from "../../components/squareIconButton";
 
+import { getExperts } from "../../services";
+import { ExpertProps } from "../../services/entities";
+
 import { useStyles } from "./list.style";
 
 const List = (props: any) => {
   const classes = useStyles();
+  const [experts, setExperts] = useState<ExpertProps[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const experts = await getExperts();
+      setExperts(experts);
+    })();
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -53,7 +66,7 @@ const List = (props: any) => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    First name{" "}
+                    First name
                     <IconButton
                       color="default"
                       aria-label="filter"
@@ -116,38 +129,45 @@ const List = (props: any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    <Box className={classes.box}>
-                      <Avatar
-                        alt="Courtney"
-                        src={SampleAvatar}
-                        className={classes.avatar}
-                      />
-                      <Typography
-                        variant="body1"
-                        display="inline"
-                        component="span"
-                      >
-                        Courtney
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>Wehner</TableCell>
-                  <TableCell>Product Group Developer</TableCell>
-                  <TableCell>Kent, Utah</TableCell>
-                  <TableCell>Project based</TableCell>
-                  <TableCell align="right">199</TableCell>
-                  <TableCell align="right">
-                    <IconButton color="default" aria-label="favorite">
-                      <IconMaker icon={IconFavorit} viewBox={"0 0 18 17"} />
-                    </IconButton>
+                {experts.map((expert) => (
+                  <TableRow key={expert.id}>
+                    <TableCell component="th" scope="row">
+                      <Box className={classes.box}>
+                        <Avatar
+                          alt="Courtney"
+                          src={expert.avatar}
+                          className={classes.avatar}
+                        />
+                        <Typography
+                          variant="body1"
+                          display="inline"
+                          component="span"
+                        >
+                          {expert.firstName}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell>{expert.lastName}</TableCell>
+                    <TableCell>{expert.jobTitle}</TableCell>
+                    <TableCell>{expert.location}</TableCell>
+                    <TableCell>{expert.employmentType}</TableCell>
+                    <TableCell align="right">{expert.hourlyRate}</TableCell>
+                    <TableCell align="right">
+                      <IconButton color="default" aria-label="favorite">
+                        <IconMaker
+                          icon={
+                            expert.isFavorit ? IconFavoritFilled : IconFavorit
+                          }
+                          viewBox={"0 0 18 17"}
+                        />
+                      </IconButton>
 
-                    <IconButton color="default" aria-label="trash">
-                      <IconMaker icon={IconTrash} viewBox={"0 0 18 19"} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
+                      <IconButton color="default" aria-label="trash">
+                        <IconMaker icon={IconTrash} viewBox={"0 0 18 19"} />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
