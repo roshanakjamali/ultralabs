@@ -1,4 +1,4 @@
-import { createTheme, darken } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
 import {
   OpenSansReg,
@@ -10,6 +10,8 @@ import {
 const palette = {
   primary: {
     main: "#0085FF",
+    dark: "#0C1446",
+    light: "#0085FF",
   },
 };
 const defaultTheme = createTheme({});
@@ -23,6 +25,12 @@ export const theme = createTheme({
       fontWeight: 700,
       color: "#272727",
     },
+    body1: {
+      fontSize: 16,
+      fontWeight: 400,
+      lineHeight: "24px",
+      color: "#1F1F1F",
+    },
   },
   overrides: {
     MuiCssBaseline: {
@@ -33,8 +41,9 @@ export const theme = createTheme({
           OpenSansLight,
           OpenSansBold,
         ],
-        "#root": {
+        body: {
           fontFamily: "OpenSans",
+          backgroundColor: "#ffffff",
         },
       },
     },
@@ -43,17 +52,38 @@ export const theme = createTheme({
         paddingTop: defaultTheme.spacing(3),
       },
     },
-    MuiIconButton: {
+    MuiSvgIcon: {
       root: {
-        borderRadius: 8,
-        backgroundColor: palette.primary.main,
-        width: 40,
-        height: 40,
+        fontSize: "1rem",
       },
-      colorPrimary: {
-        "&:hover": {
-          backgroundColor: darken(palette.primary.main, 0.1),
+    },
+    MuiTableRow: {
+      root: {
+        backgroundColor: "#FDFDFD",
+        "&:nth-of-type(odd)": {
+          backgroundColor: "rgba(210, 217, 226, 0.15)",
         },
+        "&$head": {
+          backgroundColor: "#ffffff",
+        },
+      },
+    },
+    MuiTableCell: {
+      root: {
+        fontSize: "1rem",
+        borderBottom: "none",
+      },
+      head: {
+        fontWeight: 700,
+        fontSize: "1rem",
+        color: palette.primary.dark,
+        lineHeight: "19px",
+        "& svg": {
+          fontSize: "1rem",
+        },
+      },
+      body: {
+        color: "#1F1F1F",
       },
     },
   },

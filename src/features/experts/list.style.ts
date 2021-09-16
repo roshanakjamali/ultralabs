@@ -8,6 +8,14 @@ const useStyles = makeStyles((theme: Theme) =>
     label: {
       marginLeft: theme.spacing(3),
     },
+    avatar: {
+      display: "inline-flex",
+      marginRight: theme.spacing(2),
+    },
+    box: {
+      display: "flex",
+      alignItems: "center",
+    },
   })
 );
 
