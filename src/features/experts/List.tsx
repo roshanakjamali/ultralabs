@@ -29,8 +29,8 @@ import IconMaker from "../../components/iconMaker";
 import { CustomButton } from "../../components/customButton";
 import { SquareIconButton } from "../../components/squareIconButton";
 
-import { getExperts } from "../../services";
 import { ExpertProps } from "../../services/entities";
+import { getExperts, deleteExpert } from "../../services";
 
 import { AddExpert } from "./add";
 import { open } from "./add/add.dialogSlice";
@@ -42,12 +42,11 @@ const List = (props: any) => {
   const dispatch = useAppDispatch();
 
   const [experts, setExperts] = useState<ExpertProps[]>([]);
-  const [openAdd, setOpenAdd] = useState(false);
 
   useEffect(() => {
     (async () => {
       const experts = await getExperts();
-      setExperts(experts);
+      experts && setExperts(experts);
     })();
   }, []);
 
@@ -169,7 +168,11 @@ const List = (props: any) => {
                         />
                       </IconButton>
 
-                      <IconButton color="default" aria-label="trash">
+                      <IconButton
+                        color="default"
+                        aria-label="trash"
+                        onClick={() => deleteExpert(expert.id)}
+                      >
                         <IconMaker icon={IconTrash} viewBox={"0 0 18 19"} />
                       </IconButton>
                     </TableCell>
