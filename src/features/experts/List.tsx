@@ -9,6 +9,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
+import Avatar from "@material-ui/core/Avatar";
+
 import {
   IconFavorit,
   IconFilter,
@@ -19,6 +21,8 @@ import IconMaker from "../../components/iconMaker";
 
 import { useStyles } from "./list.style";
 import { SquareIconButton } from "../../components/squareIconButton";
+import { SampleAvatar } from "../../helpers/image";
+import { Box } from "@material-ui/core";
 
 const List = (props: any) => {
   const classes = useStyles();
@@ -109,7 +113,20 @@ const List = (props: any) => {
               <TableBody>
                 <TableRow>
                   <TableCell component="th" scope="row">
-                    Courtney
+                    <Box className={classes.box}>
+                      <Avatar
+                        alt="Courtney"
+                        src={SampleAvatar}
+                        className={classes.avatar}
+                      />
+                      <Typography
+                        variant="body1"
+                        display="inline"
+                        component="span"
+                      >
+                        Courtney
+                      </Typography>
+                    </Box>
                   </TableCell>
                   <TableCell>Wehner</TableCell>
                   <TableCell>Product Group Developer</TableCell>

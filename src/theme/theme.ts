@@ -27,7 +27,7 @@ export const theme = createTheme({
     body1: {
       fontSize: 16,
       fontWeight: 400,
-      lineHeight: 24,
+      lineHeight: "24px",
       color: "#1F1F1F",
     },
   },
@@ -80,6 +80,9 @@ export const theme = createTheme({
         "& svg": {
           fontSize: "1rem",
         },
+      },
+      body: {
+        color: "#1F1F1F",
       },
     },
   },
