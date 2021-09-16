@@ -66,7 +66,6 @@ const AddExpert = ({ updateList }: AddProps) => {
               <TextField
                 fullWidth
                 id="firstName"
-                color="secondary"
                 variant="outlined"
                 placeholder="e.g. Street Address, City, State"
                 onChange={onChanageHandler("firstName")}
@@ -79,7 +78,6 @@ const AddExpert = ({ updateList }: AddProps) => {
                 id="lastName"
                 placeholder="e.g.5+ years"
                 variant="outlined"
-                color="secondary"
                 onChange={onChanageHandler("lastName")}
               />
             </Grid>
@@ -90,7 +88,6 @@ const AddExpert = ({ updateList }: AddProps) => {
                 id="jobTitle"
                 placeholder="Select"
                 variant="outlined"
-                color="secondary"
                 onChange={onChanageHandler("jobTitle")}
               />
             </Grid>
@@ -101,7 +98,6 @@ const AddExpert = ({ updateList }: AddProps) => {
                 id="location"
                 placeholder="e.g.5+ years"
                 variant="outlined"
-                color="secondary"
                 onChange={onChanageHandler("location")}
               />
             </Grid>
@@ -112,7 +108,6 @@ const AddExpert = ({ updateList }: AddProps) => {
                 id="employmentType"
                 placeholder="Select"
                 variant="outlined"
-                color="secondary"
                 onChange={onChanageHandler("employmentType")}
               />
             </Grid>
@@ -123,7 +118,6 @@ const AddExpert = ({ updateList }: AddProps) => {
                 id="hourlyRate"
                 placeholder="e.g.5+ years"
                 variant="outlined"
-                color="secondary"
                 onChange={onChanageHandler("hourlyRate")}
               />
             </Grid>

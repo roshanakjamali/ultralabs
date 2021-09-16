@@ -13,6 +13,9 @@ const palette = {
     dark: "#0C1446",
     light: "#0085FF",
   },
+  secondary: {
+    main: "#fff",
+  },
 };
 const defaultTheme = createTheme({});
 
@@ -20,6 +23,18 @@ export const theme = createTheme({
   palette,
   typography: {
     fontFamily: "OpenSans, Arial",
+    h2: {
+      fontSize: 24,
+      fontWeight: 700,
+      lineHeight: "36px",
+      color: "#1F1F1F",
+    },
+    h3: {
+      fontSize: "20px",
+      fontWeight: 700,
+      lineHeight: "30px",
+      color: "#ffffff",
+    },
     h4: {
       fontSize: 18,
       fontWeight: 600,
@@ -35,6 +50,12 @@ export const theme = createTheme({
       fontWeight: 400,
       lineHeight: "24px",
       color: "#1F1F1F",
+    },
+    subtitle1: {
+      fontSize: 14,
+      fontWeight: 400,
+      lineHeight: "19px",
+      color: palette.primary.main,
     },
   },
   overrides: {
@@ -113,6 +134,16 @@ export const theme = createTheme({
         borderRadius: 4,
         padding: defaultTheme.spacing(1, 2),
         boxSizing: "border-box",
+      },
+    },
+    MuiChip: {
+      outlinedPrimary: {
+        color: palette.primary.dark,
+        boxShadow: " 0px 0px 20px rgba(7, 87, 182, 0.08)",
+        border: "none",
+      },
+      deleteIconOutlinedColorPrimary: {
+        color: palette.primary.dark,
       },
     },
   },
