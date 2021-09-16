@@ -29,7 +29,7 @@ import IconMaker from "../../components/iconMaker";
 import { CustomButton } from "../../components/customButton";
 import { SquareIconButton } from "../../components/squareIconButton";
 
-import { ExpertProps } from "../../services/entities";
+import { ExpertProps, Error } from "../../services/entities";
 import { getExperts, deleteExpert, toggleFavExpert } from "../../services";
 
 import { AddExpert } from "./add";
@@ -42,19 +42,35 @@ const List = (props: any) => {
   const dispatch = useAppDispatch();
 
   const [experts, setExperts] = useState<ExpertProps[]>([]);
+  const [error, setError] = useState<string>();
 
   const getExpertList = async () => {
-    const experts = await getExperts();
-    experts && setExperts(experts);
+    const response = await getExperts();
+    if (typeof response === "object") {
+      setExperts(response);
+    } else {
+      setError(`(error: ${response ? response : "Not Found"})`);
+    }
   };
 
   const onDeleteExpert = useCallback(async (id: number) => {
-    await deleteExpert(id);
+    const response = await deleteExpert(id);
+    updateList(response);
   }, []);
 
   const onToggleFav = useCallback(async (expert: ExpertProps) => {
-    await toggleFavExpert({ ...expert, isFavorit: !expert.isFavorit });
+    const response = await toggleFavExpert({
+      ...expert,
+      isFavorit: !expert.isFavorit,
+    });
+    updateList(response);
   }, []);
+
+  const updateList = (response: any) => {
+    if (typeof response === "object") {
+      getExpertList();
+    }
+  };
 
   useEffect(() => {
     getExpertList();
@@ -145,53 +161,63 @@ const List = (props: any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {experts.map((expert) => (
-                  <TableRow key={expert.id}>
-                    <TableCell component="th" scope="row">
-                      <Box className={classes.box}>
-                        <Avatar
-                          alt="Courtney"
-                          src={expert.avatar}
-                          className={classes.avatar}
-                        />
-                        <Typography
-                          variant="body1"
-                          display="inline"
-                          component="span"
-                        >
-                          {expert.firstName}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{expert.lastName}</TableCell>
-                    <TableCell>{expert.jobTitle}</TableCell>
-                    <TableCell>{expert.location}</TableCell>
-                    <TableCell>{expert.employmentType}</TableCell>
-                    <TableCell align="right">{expert.hourlyRate}</TableCell>
-                    <TableCell align="right">
-                      <IconButton
-                        color="default"
-                        aria-label="favorite"
-                        onClick={() => onToggleFav(expert)}
-                      >
-                        <IconMaker
-                          icon={
-                            expert.isFavorit ? IconFavoritFilled : IconFavorit
-                          }
-                          viewBox={"0 0 18 17"}
-                        />
-                      </IconButton>
-
-                      <IconButton
-                        color="default"
-                        aria-label="trash"
-                        onClick={() => onDeleteExpert(expert.id)}
-                      >
-                        <IconMaker icon={IconTrash} viewBox={"0 0 18 19"} />
-                      </IconButton>
+                {!!error ? (
+                  <TableRow>
+                    <TableCell scope="row">
+                      <Typography variant="body1" color="error">
+                        Try Again ({error})
+                      </Typography>
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  experts.map((expert) => (
+                    <TableRow key={expert.id}>
+                      <TableCell scope="row">
+                        <Box className={classes.box}>
+                          <Avatar
+                            alt="Courtney"
+                            src={expert.avatar}
+                            className={classes.avatar}
+                          />
+                          <Typography
+                            variant="body1"
+                            display="inline"
+                            component="span"
+                          >
+                            {expert.firstName}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>{expert.lastName}</TableCell>
+                      <TableCell>{expert.jobTitle}</TableCell>
+                      <TableCell>{expert.location}</TableCell>
+                      <TableCell>{expert.employmentType}</TableCell>
+                      <TableCell align="right">{expert.hourlyRate}</TableCell>
+                      <TableCell align="right">
+                        <IconButton
+                          color="default"
+                          aria-label="favorite"
+                          onClick={() => onToggleFav(expert)}
+                        >
+                          <IconMaker
+                            icon={
+                              expert.isFavorit ? IconFavoritFilled : IconFavorit
+                            }
+                            viewBox={"0 0 18 17"}
+                          />
+                        </IconButton>
+
+                        <IconButton
+                          color="default"
+                          aria-label="trash"
+                          onClick={() => onDeleteExpert(expert.id)}
+                        >
+                          <IconMaker icon={IconTrash} viewBox={"0 0 18 19"} />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </TableContainer>
@@ -205,7 +231,7 @@ const List = (props: any) => {
           >
             Add a new item
           </CustomButton>
-          <AddExpert />
+          <AddExpert updateList={(response) => updateList(response)} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="body1" align="right">

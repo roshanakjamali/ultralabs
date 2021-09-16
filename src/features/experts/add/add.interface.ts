@@ -1,3 +1,3 @@
 export interface AddProps {
-  open: boolean;
+  updateList: (response: any) => void;
 }

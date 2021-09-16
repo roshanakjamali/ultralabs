@@ -13,3 +13,7 @@ export interface ExpertProps {
 export interface Respones<Type> {
   data: Type[];
 }
+
+export interface Error {
+  message: string;
+}

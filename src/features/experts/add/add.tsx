@@ -14,9 +14,10 @@ import { close, dialogState } from "./add.dialogSlice";
 import { ExpertProps } from "../../../services/entities";
 import { Typography } from "@material-ui/core";
 
+import { AddProps } from "./add.interface";
 import { addExpert } from "../../../services";
 
-const AddExpert = () => {
+const AddExpert = ({ updateList }: AddProps) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const open = useAppSelector(dialogState);
@@ -30,7 +31,7 @@ const AddExpert = () => {
       setExpert({ ...expert, [name]: event.target.value });
     };
 
-  const submitForm = (event: SyntheticEvent) => {
+  const submitForm = async (event: SyntheticEvent) => {
     event.preventDefault();
 
     if (Object.keys(expert).length !== 6) {
@@ -45,8 +46,9 @@ const AddExpert = () => {
       }
     }
 
-    addExpert(expert as ExpertProps);
-    console.log("submit");
+    const response = await addExpert(expert as ExpertProps);
+    updateList(response);
+    dispatch(close());
   };
 
   return (
