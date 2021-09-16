@@ -1,4 +1,4 @@
-import { createTheme, darken } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
 import {
   OpenSansReg,
@@ -11,6 +11,7 @@ const palette = {
   primary: {
     main: "#0085FF",
     dark: "#0C1446",
+    light: "#0085FF",
   },
 };
 const defaultTheme = createTheme({});

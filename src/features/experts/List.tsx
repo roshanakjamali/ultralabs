@@ -1,31 +1,36 @@
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
 import Table from "@material-ui/core/Table";
+import TableRow from "@material-ui/core/TableRow";
+import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+
+import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
 
 import Avatar from "@material-ui/core/Avatar";
 
 import {
-  IconFavorit,
-  IconFilter,
-  IconSortReset,
   IconTrash,
+  IconFilter,
+  IconFavorit,
+  IconSortReset,
 } from "../../helpers/icon";
+import { SampleAvatar } from "../../helpers/image";
 import IconMaker from "../../components/iconMaker";
 
-import { useStyles } from "./list.style";
+import { CustomButton } from "../../components/customButton";
 import { SquareIconButton } from "../../components/squareIconButton";
-import { SampleAvatar } from "../../helpers/image";
-import { Box } from "@material-ui/core";
+
+import { useStyles } from "./list.style";
 
 const List = (props: any) => {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -146,6 +151,20 @@ const List = (props: any) => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <CustomButton
+            variant="contained"
+            color="secondary"
+            startIcon={<AddCircleRoundedIcon />}
+          >
+            Add a new item
+          </CustomButton>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="body1" align="right">
+            Items per page: 10
+          </Typography>
         </Grid>
       </Grid>
     </div>
