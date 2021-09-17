@@ -1,3 +1,3 @@
-import SampleAvatar from "../assets/images/sample-avatar.png";
+import ProfileBackground from "../assets/images/profile-background.jpg";
 
-export { SampleAvatar };
+export { ProfileBackground };
