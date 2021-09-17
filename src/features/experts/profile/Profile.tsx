@@ -1,3 +1,6 @@
+import { useEffect, useCallback, useState } from "react";
+import { useHistory, useParams } from "react-router";
+
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
@@ -6,20 +9,62 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import CloseIcon from "@material-ui/icons/Close";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import { IconFavorit } from "../../../helpers/icon";
+import { IconFavorit, IconFavoritFilled } from "../../../helpers/icon";
 import IconMaker from "../../../components/iconMaker/IconMaker";
 import { LabelValuePair } from "../../../components/labelValuePair";
 
 import { useStyles } from "./profile.style";
+import { getExpert, toggleFavExpert } from "../../../services/services";
+import { ExpertProps } from "../../../services/entities";
+import Error from "../../../components/errorMessage/Error";
 
 const Profile = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { id } = useParams<{ id: string }>();
+
+  const [expert, setExpert] = useState<ExpertProps>();
+  const [error, setError] = useState<string>();
 
   const deleteSkill = () => console.log("delete");
+
+  const getExpertUser = useCallback(async () => {
+    const response = await getExpert(id);
+    if (typeof response === "object") {
+      setExpert(response);
+    } else {
+      setError(`(error: ${response ? response : "Not Found"})`);
+    }
+  }, [id]);
+
+  const onToggleFav = useCallback(async (expert: ExpertProps) => {
+    await toggleFavExpert({
+      ...expert,
+      isFavorit: !expert.isFavorit,
+    });
+
+    setExpert({ ...expert, isFavorit: !expert.isFavorit });
+  }, []);
+
+  useEffect(() => {
+    getExpertUser();
+    return () => setExpert(undefined);
+  }, [getExpertUser]);
+
+  if (!expert && !error) {
+    return (
+      <Typography variant="h6" color="primary" align="center">
+        Loading ...
+      </Typography>
+    );
+  }
+
+  if (!expert && error) {
+    return <Error message={error} />;
+  }
 
   return (
     <>
@@ -27,7 +72,11 @@ const Profile = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3}></Grid>
           <Grid item xs={12} sm={9} container justifyContent="space-between">
-            <Button className={classes.button} startIcon={<ChevronLeftIcon />}>
+            <Button
+              className={classes.button}
+              startIcon={<ChevronLeftIcon />}
+              onClick={() => history.goBack()}
+            >
               Back
             </Button>
             <Button className={classes.button} startIcon={<PhotoCameraIcon />}>
@@ -41,14 +90,14 @@ const Profile = () => {
           <Grid item xs={12} sm={3}>
             <Box className={classes.profile}>
               <Avatar
-                alt="Remy Sharp"
-                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt={expert!.firstName}
+                src={expert!.avatar}
                 className={classes.avatar}
               />
               <Typography variant="h2" gutterBottom>
-                Jonathan Steele
+                {expert!.firstName} {expert!.lastName}
               </Typography>
-              <Typography variant="body1">Your position</Typography>
+              <Typography variant="body1">{expert!.jobTitle}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={9}>
@@ -59,18 +108,27 @@ const Profile = () => {
                 </Typography>
                 <Button
                   className={classes.button}
+                  onClick={() => onToggleFav(expert!)}
                   startIcon={
-                    <IconMaker icon={IconFavorit} viewBox={"0 0 18 17"} />
+                    <IconMaker
+                      icon={expert?.isFavorit ? IconFavoritFilled : IconFavorit}
+                      viewBox={"0 0 18 17"}
+                    />
                   }
                 >
-                  Add to favorites
+                  {expert?.isFavorit
+                    ? "Remove From favorites"
+                    : "Add to favorites"}
                 </Button>
               </Box>
               <Box>
                 <Grid item container spacing={3}>
                   <Grid item container>
                     <Grid item xs={12} sm={3}>
-                      <LabelValuePair label="Location" value="test" />
+                      <LabelValuePair
+                        label="Location"
+                        value={expert!.location}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <LabelValuePair label="Level" value="Senior" />
@@ -78,7 +136,7 @@ const Profile = () => {
                     <Grid item xs={12} sm={3}>
                       <LabelValuePair
                         label="Preferred"
-                        value="employment type"
+                        value={expert!.employmentType}
                       />
                     </Grid>
                   </Grid>
@@ -90,10 +148,10 @@ const Profile = () => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                      <LabelValuePair label="Hourly rate" value="$ 199" />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LabelValuePair label="Hourly rate" value="$ 199" />
+                      <LabelValuePair
+                        label="Hourly rate"
+                        value={`$ ${expert!.hourlyRate}`}
+                      />
                     </Grid>
                   </Grid>
                   <Grid item container>

@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      padding: theme.spacing(2),
     },
     label: {
       marginLeft: theme.spacing(3),

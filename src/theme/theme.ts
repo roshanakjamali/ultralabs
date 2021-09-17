@@ -70,12 +70,8 @@ export const theme = createTheme({
         body: {
           fontFamily: "OpenSans",
           backgroundColor: "#ffffff",
+          overflowX: "hidden",
         },
-      },
-    },
-    MuiContainer: {
-      root: {
-        paddingTop: defaultTheme.spacing(3),
       },
     },
     MuiSvgIcon: {
