@@ -8,10 +8,11 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
 import Table from "@material-ui/core/Table";
+
 import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
+import TableCell, { TableCellProps } from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
@@ -38,6 +39,44 @@ import { AddExpert } from "./add";
 import { open } from "./add/add.dialogSlice";
 
 import { useStyles } from "./list.style";
+
+const header = [
+  {
+    label: "First name",
+    sortable: true,
+    align: "left",
+  },
+  {
+    label: "Last name",
+    sortable: true,
+    align: "left",
+  },
+  {
+    label: "Job title",
+    sortable: true,
+    align: "left",
+  },
+  {
+    label: "Location",
+    sortable: true,
+    align: "left",
+  },
+  {
+    label: "Employment type",
+    sortable: true,
+    align: "left",
+  },
+  {
+    label: "Hourly rate (USD)",
+    sortable: true,
+    align: "right",
+  },
+  {
+    label: "Actions",
+    sortable: false,
+    align: "right",
+  },
+];
 
 const List = () => {
   const classes = useStyles();
@@ -112,67 +151,23 @@ const List = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>
-                    First name
-                    <IconButton
-                      color="default"
-                      aria-label="filter"
-                      size="small"
-                    >
-                      <IconMaker icon={IconSortReset} viewBox={"0 0 16 16"} />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    Last name
-                    <IconButton
-                      color="default"
-                      aria-label="filter"
-                      size="small"
-                    >
-                      <IconMaker icon={IconSortReset} viewBox={"0 0 16 16"} />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    Job title
-                    <IconButton
-                      color="default"
-                      aria-label="filter"
-                      size="small"
-                    >
-                      <IconMaker icon={IconSortReset} viewBox={"0 0 16 16"} />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    Location
-                    <IconButton
-                      color="default"
-                      aria-label="filter"
-                      size="small"
-                    >
-                      <IconMaker icon={IconSortReset} viewBox={"0 0 16 16"} />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    Employment type
-                    <IconButton
-                      color="default"
-                      aria-label="filter"
-                      size="small"
-                    >
-                      <IconMaker icon={IconSortReset} viewBox={"0 0 16 16"} />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell align="right">
-                    Hourly rate (USD)
-                    <IconButton
-                      color="default"
-                      aria-label="filter"
-                      size="small"
-                    >
-                      <IconMaker icon={IconSortReset} viewBox={"0 0 16 16"} />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell align="right">Actions</TableCell>
+                  {header.map((head) => (
+                    <TableCell align={head.align as TableCellProps["align"]}>
+                      {head.label}
+                      {head.sortable && (
+                        <IconButton
+                          color="default"
+                          aria-label="filter"
+                          size="small"
+                        >
+                          <IconMaker
+                            icon={IconSortReset}
+                            viewBox={"0 0 16 16"}
+                          />
+                        </IconButton>
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
               </TableHead>
               <TableBody>
