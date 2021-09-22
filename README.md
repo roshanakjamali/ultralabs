@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 ### `yarn install`
 
-#### `Or you can use npm`
+_Or you can use npm_
 
 ### `npm install`
 
