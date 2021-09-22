@@ -64,7 +64,7 @@
       "location": "Syracuse, Connecticut",
       "employmentType": "Project based",
       "hourlyRate": "199",
-      "isFavorit": true
+      "isFavorit": false
     },
     {
       "id": 7,
@@ -78,17 +78,6 @@
       "isFavorit": false
     },
     {
-      "id": 8,
-      "avatar": "https://randomuser.me/api/portraits/men/58.jpg",
-      "firstName": "Soham",
-      "lastName": "Mayert",
-      "jobTitle": "Dynamic Interactions Assistant",
-      "location": "Coppell, Virginia",
-      "employmentType": "Project based",
-      "hourlyRate": "199",
-      "isFavorit": true
-    },
-    {
       "firstName": "Roshanak",
       "lastName": "Jamali",
       "jobTitle": "front-end developer",
@@ -96,7 +85,7 @@
       "employmentType": "Remote",
       "hourlyRate": "10",
       "id": 9,
-      "isFavorit": true
+      "isFavorit": false
     }
   ]
 }
