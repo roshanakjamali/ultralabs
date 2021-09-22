@@ -4,20 +4,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+**1. To installing packages with yarn**
+
 ### `yarn install`
 
-**To installing packages with yarn**
-
-### `Or you can use npm`
+#### `Or you can use npm`
 
 ### `npm install`
 
-**To installing packages with npm**
+**2. To staring react project**
 
 ### `yarn start`
 
-**To staring react project**
+**3. To starting json server**
 
 ### `yarn server`
-
-**To starting json server**
