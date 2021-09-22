@@ -20,7 +20,7 @@ const Error = ({ message }: ErrorProps) => {
       }
     >
       <AlertTitle>Error</AlertTitle>
-      This is an error alert — <strong>{message}</strong>
+      There is an error on Server with Error: — <strong>{message}</strong>
     </Alert>
   );
 };
